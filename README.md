@@ -1,0 +1,2 @@
+# TradingMasters
+Trading picks
