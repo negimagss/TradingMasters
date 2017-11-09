@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +21,7 @@
         <th>Stop loss</th>
         <th>Target Price</th>
         <th>Market Price</th>
+        <th>P & L</th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +31,7 @@
 			<td>{{ stock.stoploss }}</td>
 			<td>{{ stock.target }}</td>
 			<td>{{ stock.cprice }}</td>
+			<td>{{ ((stock.cprice - stock.bprice) * 100 / stock.bprice) | number:2 }}</td>
 		</tr>
 	</tbody>
 </table>
@@ -43,21 +46,21 @@ app.controller('stockCtrl', function($scope, $http) {
 			bprice: 856,
 			stoploss: "-",
 			target: 900,
-			cprice: 1098
+			cprice: ""
 		},
 		{	
 			name: "OIL",
 			bprice: 350,
 			stoploss: 345,
 			target: 400,
-			cprice: 362
+			cprice: ""
 		},
 		{
 			name: "PTC",
 			bprice: 124,
 			stoploss: "-",
 			target: 135,
-			cprice: 121
+			cprice: ""
 		},
 
 		{
@@ -65,86 +68,97 @@ app.controller('stockCtrl', function($scope, $http) {
 			bprice: 428,
 			stoploss: "-",
 			target: 460,
-			cprice: 440
+			cprice: ""
 		},
 		{
 			name: "BASF",
 			bprice: 1731,
 			stoploss: "-",
 			target: 1800,
-			cprice: 1695
+			cprice: ""
 		},
 		{
 			name: "GODREJCP",
 			bprice: 935,
 			stoploss: "-",
 			target: "-",
-			cprice: 977
+			cprice: ""
 		},
 		{
 			name: "JUSTDIAL",
 			bprice: 420,
 			stoploss: "-",
 			target: 490,
-			cprice: 459
+			cprice: ""
 		},
 		{
 			name: "DIVISLAB",
 			bprice: 925,
 			stoploss: "-",
 			target: 1070,
-			cprice: 1011
+			cprice: ""
 		},
 		{
 			name: "PETRONET",
 			bprice: 263,
 			stoploss: "-",
 			target: 285,
-			cprice: 268
+			cprice: ""
 		},
 		{
 			name: "AUTOAXLES",
 			bprice: 965,
 			stoploss: "-",
 			target: 1040,
-			cprice: 954
+			cprice: ""
 		},
 		{
 			name: "HINDZINC",
 			bprice: 325,
 			stoploss: "-",
 			target: 350,
-			cprice: 314
+			cprice: ""
 		},
 		{
 			name: "TATAELXSI",
 			bprice: 866,
 			stoploss: "-",
 			target: 900,
-			cprice: 911
+			cprice: ""
 		},
 		{
 			name: "HDFC",
 			bprice: 1779,
 			stoploss: "-",
 			target: 1820,
-			cprice: 1725
+			cprice: ""
 		},
 		{
 			name: "M&M",
 			bprice: 1358,
 			stoploss: "-",
 			target: 1420,
-			cprice: 1360
+			cprice: ""
 		},
 		{
 			name: "ASIANPAINT",
 			bprice: 1190,
 			stoploss: "-",
 			target: "-",
-			cprice: 1196
+			cprice: ""
 		}
 	];
+
+	for(var x = 0; x < 5; x++){
+		alert($scope.stocks[x].name);
+		//setTimeout(function(){ 
+		var stockname = "https://www.quandl.com/api/v3/datasets/NSE/" + $scope.stocks[x].name + ".json?api_key=gwZhGszfyS5bH7p44UfA&rows=1";
+			$http.get(stockname).then(function(response) {
+				$scope.stocks[x].cprice = response.data.dataset.data[0][5];
+				alert($scope.stocks[x].name);
+        	}, 3000);
+    	//});
+	}
 });
 </script>
 
