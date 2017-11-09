@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Trading Masters</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,7 +15,6 @@
 <table class="table">
     <thead>
       <tr>
-        <th>Date</th>
         <th>Stock name</th>
         <th>Buy price</th>
         <th>Stop loss</th>
@@ -24,8 +23,7 @@
       </tr>
     </thead>
     <tbody>
-		<tr ng-repeat="stock in stocks">
-			<td>{{ stock.date }}</td>
+		<tr ng-repeat="stock in stocks" ng-class="stock.bprice < stock.cprice ? 'success' : 'danger'">
 			<td>{{ stock.name }}</td>
 			<td>{{ stock.bprice }}</td>
 			<td>{{ stock.stoploss }}</td>
@@ -41,98 +39,111 @@ var app = angular.module('myApp', []);
 app.controller('stockCtrl', function($scope, $http) {
     $scope.stocks = [ 
 		{	
-			date: "43032",
 			name: "UBL",
-			bprice: "856",
+			bprice: 856,
 			stoploss: "-",
-			target: "900+",
-			cprice: "1137"
+			target: 900,
+			cprice: 1098
 		},
 		{	
-			date: "43034",
 			name: "OIL",
-			bprice: "350",
-			stoploss: "345",
-			target: "400",
-			cprice: "370"
+			bprice: 350,
+			stoploss: 345,
+			target: 400,
+			cprice: 362
+		},
+		{
+			name: "PTC",
+			bprice: 124,
+			stoploss: "-",
+			target: 135,
+			cprice: 121
 		},
 
-			{date: "43035",
-			name: "PTC",
-			bprice: "124",
+		{
+			name: "TATAMOTORS",
+			bprice: 428,
 			stoploss: "-",
-			target: "135",
-			cprice: "126"},
-
-			{date: "43035",
-			name: "TATAMOTORS ",
-			bprice: "428",
-			stoploss: "-",
-			target: "460",
-			cprice: "458"},
-
-			{date: "43039",
+			target: 460,
+			cprice: 440
+		},
+		{
 			name: "BASF",
-			bprice: "1731",
+			bprice: 1731,
 			stoploss: "-",
-			target: "1800",
-			cprice: "1730"},
-
-			{date: "43039",
+			target: 1800,
+			cprice: 1695
+		},
+		{
 			name: "GODREJCP",
-			bprice: "935",
+			bprice: 935,
 			stoploss: "-",
 			target: "-",
-			cprice: "972"},
-
-			{date: "43039",
+			cprice: 977
+		},
+		{
 			name: "JUSTDIAL",
-			bprice: "420",
+			bprice: 420,
 			stoploss: "-",
-			target: "490",
-			cprice: "478"},
-
-			{date: "43039",
+			target: 490,
+			cprice: 459
+		},
+		{
 			name: "DIVISLAB",
-			bprice: "925",
+			bprice: 925,
 			stoploss: "-",
-			target: "1070",
-			cprice: "1047"},
-
-			{date: "43040",
+			target: 1070,
+			cprice: 1011
+		},
+		{
 			name: "PETRONET",
-			bprice: "263",
+			bprice: 263,
 			stoploss: "-",
-			target: "285",
-			cprice: "260"},
-
-			{date: "43040",
+			target: 285,
+			cprice: 268
+		},
+		{
 			name: "AUTOAXLES",
-			bprice: "965",
+			bprice: 965,
 			stoploss: "-",
-			target: "1040",
-			cprice: "952"},
-
-			{date: "43040",
+			target: 1040,
+			cprice: 954
+		},
+		{
 			name: "HINDZINC",
-			bprice: "325",
+			bprice: 325,
 			stoploss: "-",
-			target: "350",
-			cprice: "325"},
-
-			{date: "43041",
+			target: 350,
+			cprice: 314
+		},
+		{
 			name: "TATAELXSI",
-			bprice: "866",
+			bprice: 866,
 			stoploss: "-",
-			target: "900",
-			cprice: "864"},
-
-			{date: "43042",
+			target: 900,
+			cprice: 911
+		},
+		{
 			name: "HDFC",
-			bprice: "1779",
+			bprice: 1779,
 			stoploss: "-",
-			target: "1820",
-			cprice: "1776"}
+			target: 1820,
+			cprice: 1725
+		},
+		{
+			name: "M&M",
+			bprice: 1358,
+			stoploss: "-",
+			target: 1420,
+			cprice: 1360
+		},
+		{
+			name: "ASIANPAINT",
+			bprice: 1190,
+			stoploss: "-",
+			target: "-",
+			cprice: 1196
+		}
 	];
 });
 </script>
