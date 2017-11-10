@@ -30,7 +30,7 @@
 			<td>{{ stock.stoploss }}</td>
 			<td>{{ stock.target }}</td>
 			<td>{{ stock.cprice }}</td>
-			<td>{{ ((stock.cprice - stock.bprice) * 100 / stock.bprice) | number:2 }}</td>
+			<td>{{ ((stock.cprice - stock.bprice) * 100 / stock.bprice) | number:2 }}%</td>
 		</tr>
 	</tbody>
 </table>
@@ -162,8 +162,6 @@ app.controller('stockCtrl', function($scope, $http) {
     }
 	
 	var j = 0;
-	var temp = [];
-
 	function apiCaller(i) {
 		var repeater = setTimeout(function(){
 			if(j < $scope.stocks.length){
@@ -176,6 +174,11 @@ app.controller('stockCtrl', function($scope, $http) {
 				apiCaller(++i); 
 			}
 			else{
+				apifetcher($scope.stocks[j-1].name)
+				.then(response => {
+					console.log("response is here for: "+ $scope.stocks[j-1].name +": "+ JSON.stringify(response))
+					$scope.stocks[j-1].cprice = response;
+				})
 				clearInterval(repeater);
 			}
 		}, 1500);
