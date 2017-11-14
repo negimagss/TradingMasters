@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Trading Masters</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="stockCtrl" class="container">
+<div ng-include="'stockList.html'"></div>
+	
+<table class="table">
+    <thead>
+      <tr>
+        <th>Stock name</th>
+        <th>Buy price</th>
+        <th>Stop loss</th>
+        <th>Target Price</th>
+        <th>Market Price</th>
+        <th>P & L</th>
+      </tr>
+    </thead>
+    <tbody>
+		<tr ng-repeat="stock in stocks" ng-class="stock.bprice < stock.cprice ? 'success' : 'danger'">
+			<td>{{ stock.name }}</td>
+			<td>{{ stock.bprice }}</td>
+			<td>{{ stock.stoploss }}</td>
+			<td>{{ stock.target }}</td>
+			<td>{{ stock.cprice }}</td>
+			<td>{{ ((stock.cprice - stock.bprice) * 100 / stock.bprice) | number:2 }}%</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('stockCtrl', function($scope, $http) {
+	
+	$http.get("https://tradingmasters-7db7.restdb.io/rest/stocklist?key=22631469345172666884").then(function(response) {
+        $scope.stocks = response.data;
+    });
+	
+	var apiGen = (name) => { return `https://www.quandl.com/api/v3/datasets/NSE/${name}.json?api_key=gwZhGszfyS5bH7p44UfA&rows=1`; }
+    
+	var apifetcher = (name) => {
+        return new Promise((resolve, reject) => {
+            $http.get(apiGen(name))
+                .then(response => {
+                    return resolve(response.data.dataset.data[0][4]);
+                })
+                .catch(err => {
+                    console.log("Failed to fetch for: "+ name);
+                })
+        })
+    }
+	
+	var j = 0;
+	function apiCaller(i) {
+		var repeater = setTimeout(function(){
+			if(j < $scope.stocks.length){
+				apifetcher($scope.stocks[j].name)
+				.then(response => {
+					console.log("response is here for: "+ $scope.stocks[j].name +": "+ JSON.stringify(response))
+					$scope.stocks[j].cprice = response;
+					j = j + 1;
+				})
+				apiCaller(++i); 
+			}
+			else{
+				apifetcher($scope.stocks[j-1].name)
+				.then(response => {
+					console.log("response is here for: "+ $scope.stocks[j-1].name +": "+ JSON.stringify(response))
+					$scope.stocks[j-1].cprice = response;
+				})
+				clearInterval(repeater);
+			}
+		}, 3000);
+	}
+
+	apiCaller(0);
+	
+});
+</script>
+
+</body>
+</html>
