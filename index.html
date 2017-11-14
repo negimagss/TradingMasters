@@ -42,7 +42,7 @@
 var app = angular.module('myApp', []);
 app.controller('stockCtrl', function($scope, $http) {
 	
-	$http.get("https://tradingmasters-7db7.restdb.io/rest/stocklist?key=22631469345172666884").then(function(response) {
+	$http.get("https://tradingmasters-7db7.restdb.io/rest/stocklist?key=5a0a78e279ad5fc6014a25a4").then(function(response) {
         $scope.stocks = response.data;
     });
 	
