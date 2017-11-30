@@ -40,8 +40,8 @@
 
 <script>
 var app = angular.module('myApp', []);
-app.controller('stockCtrl', function($scope, $http) {
-	
+app.controller('stockCtrl', function($scope, $http, $location) {
+	alert($location.path());
 	$scope.stocks = [ 
 		{	
 			name: "UBL",
