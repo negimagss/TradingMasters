@@ -16,6 +16,8 @@
 	<input name="submit" type="button" onclick="vote()" class="button" id="voteButton" value="VOTE"/>
 </form>
 
+<button onclick="startvote()">Start voting</button>
+
 <script type="text/javascript">
 	var vote = function(){
 		$theForm = $('#form1');
@@ -27,6 +29,10 @@
 				console.log('Yay! Form sent.');
 			}
 		});
+	}
+	
+	var startvote = function(){
+		setInterval(function(){ vote(); }, 8000);
 	}
 </script>
 
