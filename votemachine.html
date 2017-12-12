@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poll</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta property="og:title" content="Poll: Mrs. KARNATAKA 2017"/>
+
+</head>
+
+<body>
+<span class="fontAdditionalText">VOTE FOR YOUR FAVORITE MODEL </span>
+<form id="form1" name="form1">
+	<input name="checkboxes[]" type="checkbox" checked="true" value="1259075" id="cb7" /><label for="cb7" class="css-label"></label>
+	<span class="fontQuestion">Mrs. RANJITHA</span>
+	<input name="submit" type="button" onclick="vote()" class="button" id="voteButton" value="VOTE"/>
+</form>
+
+<script type="text/javascript">
+	var vote = function(){
+		$theForm = $('#form1');
+		$.ajax({
+			type: "POST",
+			url: "http://www.anonvote.com/poll/z587961hi",
+			data: "checkboxes%5B%5D=1259075&submit=VOTE",
+			success: function(data) {
+				console.log('Yay! Form sent.');
+			}
+		});
+	}
+</script>
+
+</div>
+</body>
+</html>
