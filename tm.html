@@ -323,11 +323,12 @@
     <div class="col-sm-5">
       <p>Contact us and we'll get back to you within 24 hours.</p>
       <p><span class="glyphicon glyphicon-map-marker"></span> Bangalore, India</p>
-      <p><span class="glyphicon glyphicon-phone"></span> +91 9886566142</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +91 9108584001</p>
       <p><span class="glyphicon glyphicon-envelope"></span> help@tradingmasters.com</p>
     </div>
     <div class="col-sm-7 slideanim">
       <div class="row">
+        <form>
         <div class="col-sm-6 form-group">
           <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
         </div>
@@ -335,12 +336,13 @@
           <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
         </div>
       </div>
-      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5" required></textarea><br>
       <div class="row">
         <div class="col-sm-12 form-group">
-          <button class="btn btn-default pull-right" type="submit">Send</button>
+          <input class="btn btn-default pull-right" type="submit" onClick="submits()">
         </div>
       </div>
+    </form>
     </div>
   </div>
 </div>
@@ -387,6 +389,27 @@ $(document).ready(function(){
     });
   });
 })
+
+
+var submits = function (){
+  if( $('#name').val() != "" && $('#email').val() != "" && $('#comments').val() != ""){
+      $.ajax({
+        type: "POST",
+        url: "https://docs.google.com/forms/d/e/1FAIpQLSdMHc5_V5YyLmwBJqzA_jx9vv_6cQiEduiqTmL7Sz6wJ2FsAQ/formResponse",
+        data: "entry.1221477433=" + $('#name').val() + "&entry.1885104584=" + $('#email').val() + "&entry.766830352=" + $('#comments').val(),
+        success: function(data) {
+        }
+      });
+      alert('Thank you. We will get back to you soon');
+      $('#name').val("");
+      $('#email').val("");
+      $('#comments').val("");
+  }
+  else{
+    alert('Enter all the details before submitting');
+  }
+}
+
 </script>
 
 </body>
