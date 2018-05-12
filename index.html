@@ -166,7 +166,7 @@ app.controller('stockCtrl', function($scope, $http, $location) {
 				console.log("response is here for: "+ $scope.stocks[j].name +": "+ response.data.dataset.data[0][4])
 				$scope.stocks[j].cprice = response.data.dataset.data[0][4];
 			    })
-			}, j * 3000);
+			}, j * 1000);
 		    })();
 		}
 	    })();
